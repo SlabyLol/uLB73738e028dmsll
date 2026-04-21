@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Access</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --accent: #38bdf8;
+            --text: #f8fafc;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text);
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #login-container, #video-container {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: var(--accent);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+        }
+
+        #video-container { display: none; }
+
+        video {
+            width: 100%;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="login-container">
+        <h2>Enter Access Password</h2>
+        <input type="password" id="password" placeholder="Password...">
+        <br>
+        <button onclick="checkPassword()">Unlock</button>
+    </div>
+
+    <div id="video-container">
+        <video controls>
+            <source src="https://drive.google.com/file/d/1PbwXoEG1fSM7WAM5JFYiJdg40o7XD2BU/view?usp=sharing" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <script>
+        function checkPassword() {
+            const password = document.getElementById('password').value;
+            const correctPassword = "videoC00K";
+
+            if (password === correctPassword) {
+                document.getElementById('login-container').style.display = 'none';
+                document.getElementById('video-container').style.display = 'block';
+            } else {
+                alert("Incorrect Password!");
+            }
+        }
+    </script>
+</body>
+</html>
