@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Private Video Access</title>
+    <title>Secure Access Portal</title>
     <style>
         :root {
             --bg-color: #0f172a;
@@ -15,7 +15,7 @@
         body {
             background-color: var(--bg-color);
             color: var(--text);
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -23,26 +23,28 @@
             margin: 0;
         }
 
-        #login-container, #video-container {
+        #age-gate, #login-container, #video-container {
             background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
             width: 90%;
-            max-width: 640px;
+            max-width: 500px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
 
         input {
-            width: 80%;
+            width: 100%;
             padding: 12px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             border-radius: 8px;
-            border: none;
-            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
             color: white;
             outline: none;
+            box-sizing: border-box;
         }
 
         button {
@@ -54,17 +56,19 @@
             color: #0f172a;
             font-weight: bold;
             transition: 0.3s;
+            margin: 5px;
         }
 
-        button:hover { opacity: 0.9; }
+        button:hover { opacity: 0.9; transform: scale(1.02); }
 
-        #video-container { display: none; }
+        #login-container, #video-container { display: none; }
         
         .video-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            padding-bottom: 56.25%; 
             height: 0;
             overflow: hidden;
+            border-radius: 12px;
         }
 
         .video-wrapper iframe {
@@ -73,31 +77,43 @@
             left: 0;
             width: 100%;
             height: 100%;
-            border-radius: 8px;
         }
     </style>
 </head>
 <body>
 
+    <div id="age-gate">
+        <h2>Age Verification</h2>
+        <p>Are you at least 18 years old?</p>
+        <button onclick="confirmAge()">Yes, I am 18+</button>
+        <button onclick="window.location.href='https://www.google.com'">No</button>
+    </div>
+
     <div id="login-container">
-        <h2>Zugriff erforderlich</h2>
-        <input type="password" id="password" placeholder="Passwort eingeben...">
+        <h2>Access Required</h2>
+        <input type="password" id="password" placeholder="Enter password...">
         <br>
-        <button onclick="checkPassword()">Entsperren</button>
+        <button onclick="checkPassword()">Unlock Access</button>
     </div>
 
     <div id="video-container">
         <div class="video-wrapper">
             <iframe 
-                src="https://player.vimeo.com/video/1185381694" 
-                frameborder="0" 
-                allow="autoplay; fullscreen; picture-in-picture" 
-                allowfullscreen>
+                src="https://iframe.mediadelivery.net/embed/642632/5e5f2cce-b858-4e95-8b37-06292b7ac059?autoplay=true&loop=false&muted=false&preload=true&responsive=true" 
+                loading="lazy" 
+                style="border:none;" 
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" 
+                allowfullscreen="true">
             </iframe>
         </div>
     </div>
 
     <script>
+        function confirmAge() {
+            document.getElementById('age-gate').style.display = 'none';
+            document.getElementById('login-container').style.display = 'block';
+        }
+
         function checkPassword() {
             const password = document.getElementById('password').value;
             const correctPassword = "videoC00K";
@@ -106,7 +122,7 @@
                 document.getElementById('login-container').style.display = 'none';
                 document.getElementById('video-container').style.display = 'block';
             } else {
-                alert("Falsches Passwort!");
+                alert("Incorrect Password!");
             }
         }
     </script>
