@@ -3,72 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Access Portal</title>
+    <title>Secure Access</title>
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --accent: #38bdf8;
-            --text: #f8fafc;
+            --glow: #38bdf8;
+            --accent: #818cf8;
+            --bg-deep: #050505;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text);
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            background-color: var(--bg-deep);
+            background-image: 
+                radial-gradient(at 20% 20%, rgba(56, 189, 248, 0.15) 0px, transparent 50%),
+                radial-gradient(at 80% 80%, rgba(129, 140, 248, 0.15) 0px, transparent 50%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: white;
         }
 
-        #age-gate, #login-container, #video-container {
-            background: var(--card-bg);
-            padding: 2.5rem;
-            border-radius: 20px;
-            backdrop-filter: blur(15px);
+        #login-container {
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(30px);
+            padding: 4rem 3rem;
+            border-radius: 30px;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.05);
             text-align: center;
             width: 90%;
-            max-width: 500px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            max-width: 420px;
+        }
+
+        h2 { 
+            font-size: 1.5rem;
+            letter-spacing: -0.02em;
+            margin-bottom: 2rem;
+            background: linear-gradient(90deg, #fff, #a1a1aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         input {
             width: 100%;
-            padding: 12px;
+            padding: 18px;
             margin-bottom: 20px;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.3);
             color: white;
+            font-size: 1rem;
             outline: none;
             box-sizing: border-box;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        input:focus {
+            border-color: var(--glow);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
         }
 
         button {
-            padding: 12px 24px;
-            background: var(--accent);
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--glow), var(--accent));
             border: none;
-            border-radius: 8px;
+            border-radius: 16px;
+            color: white;
+            font-weight: 700;
             cursor: pointer;
-            color: #0f172a;
-            font-weight: bold;
-            transition: 0.3s;
-            margin: 5px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            box-shadow: 0 10px 20px rgba(56, 189, 248, 0.2);
         }
 
-        button:hover { opacity: 0.9; transform: scale(1.02); }
+        button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 30px rgba(56, 189, 248, 0.4);
+        }
 
-        #login-container, #video-container { display: none; }
-        
+        #video-container {
+            display: none;
+            width: 95%;
+            max-width: 900px;
+            animation: emerge 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        @keyframes emerge {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); filter: blur(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0px); }
+        }
+
         .video-wrapper {
             position: relative;
-            padding-bottom: 56.25%; 
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
-            border-radius: 12px;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .video-wrapper iframe {
@@ -82,25 +120,16 @@
 </head>
 <body>
 
-    <div id="age-gate">
-        <h2>Age Verification</h2>
-        <p>Are you at least 18 years old?</p>
-        <button onclick="confirmAge()">Yes, I am 18+</button>
-        <button onclick="window.location.href='https://www.google.com'">No</button>
-    </div>
-
     <div id="login-container">
-        <h2>Access Required</h2>
-        <input type="password" id="password" placeholder="Enter password...">
-        <br>
-        <button onclick="checkPassword()">Unlock Access</button>
+        <h2>Secure Access</h2>
+        <input type="password" id="password" placeholder="Enter key...">
+        <button onclick="checkPassword()">Unlock</button>
     </div>
 
     <div id="video-container">
         <div class="video-wrapper">
             <iframe 
-                src="https://iframe.mediadelivery.net/embed/642632/5e5f2cce-b858-4e95-8b37-06292b7ac059?autoplay=true&loop=false&muted=false&preload=true&responsive=true" 
-                loading="lazy" 
+                src="https://iframe.mediadelivery.net/embed/642632/5e5f2cce-b858-4e95-8b37-06292b7ac059?autoplay=true" 
                 style="border:none;" 
                 allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" 
                 allowfullscreen="true">
@@ -109,20 +138,16 @@
     </div>
 
     <script>
-        function confirmAge() {
-            document.getElementById('age-gate').style.display = 'none';
-            document.getElementById('login-container').style.display = 'block';
-        }
-
         function checkPassword() {
             const password = document.getElementById('password').value;
-            const correctPassword = "videoC00K";
-
-            if (password === correctPassword) {
+            if (password === "videoC00K") {
                 document.getElementById('login-container').style.display = 'none';
                 document.getElementById('video-container').style.display = 'block';
             } else {
-                alert("Incorrect Password!");
+                // Subtle shake effect for error
+                const input = document.getElementById('password');
+                input.style.borderColor = "#ef4444";
+                alert("Access Denied.");
             }
         }
     </script>
